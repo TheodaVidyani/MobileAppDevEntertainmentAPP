@@ -1,103 +1,104 @@
-import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  ActivityIndicator,
-  Dimensions,
-  RefreshControl,
-  Platform,
-  StatusBar,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, Image, StyleSheet, Dimensions, TextInput } from 'react-native';
 import axios from 'axios';
 
-const API_KEY = '998c3726-9506-4c1c-b6fb-7f45fecac7b3';
 const { width } = Dimensions.get('window');
 
-interface ArtItem {
-  id: number;
+// Define a TypeScript interface for the artwork data
+interface Artwork {
+  objectID: number;
   title: string;
-  imageUrl: string;
-  culture: string;
-  period: string;
+  artistDisplayName: string;
+  primaryImage: string | null; // primaryImage can be null
 }
 
-const HomeScreen: React.FC = () => {
-  const [artItems, setArtItems] = useState<ArtItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+const ArtGalleryApp = () => {
+  const [searchQuery, setSearchQuery] = useState('sunflowers'); // Default query
+  const [artworks, setArtworks] = useState<Artwork[]>([]); // Explicitly set the state type to Artwork[]
+  const [loading, setLoading] = useState(false);
 
-  const fetchArtData = async () => {
+  useEffect(() => {
+    if (searchQuery) {
+      fetchArtworks();
+    }
+  }, [searchQuery]);
+
+  const fetchArtworks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `https://api.harvardartmuseums.org/object?apikey=${API_KEY}&size=10`
+      // Fetch object IDs based on the search query
+      const searchUrl = `https://collectionapi.metmuseum.org/public/collection/v1/search?q=${searchQuery}`;
+      const searchResponse = await axios.get(searchUrl);
+      const objectIDs = searchResponse.data.objectIDs?.slice(0, 20) || []; // Limit to 20 results
+
+      // Fetch artwork details for each object ID
+      const artworksData = await Promise.all(
+        objectIDs.map(async (id: number) => { // Ensure the ID is treated as a number
+          try{
+          const objectUrl = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
+          const objectResponse = await axios.get(objectUrl);
+          return objectResponse.data;
+        }
+        catch (error) {
+          // Handle the 404 error and skip to the next item
+          if (axios.isAxiosError(error) && error.response?.status === 404) {
+            console.warn(`Artwork with ID ${id} not found (404). Skipping...`);
+            return null; // Skip this artwork
+          }
+          console.error('Error fetching artwork:', error);
+          return null; // Skip this artwork on other errors
+        }
+      })
       );
 
-      const data = response.data.records.map((item: any) => ({
-        id: item.objectid,
-        title: item.title || 'Untitled',
-        imageUrl: item.primaryimageurl || '',
-        culture: item.culture || 'Unknown',
-        period: item.period || 'Unknown',
-      }));
-
-      setArtItems(data);
+      // Filter artworks with a valid primaryImage
+      const validArtworks = artworksData.filter((artwork) => artwork.primaryImage);
+      setArtworks(validArtworks); // Line 33
     } catch (error) {
-      console.error('Error fetching art data:', error);
+      console.error('Error fetching artworks:', error);
     } finally {
       setLoading(false);
-      setRefreshing(false);
     }
   };
 
-  useEffect(() => {
-    fetchArtData();
-  }, []);
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    fetchArtData();
+  // Fallback for missing images
+  const getImageUrl = (imageUrl: string | null) => {
+    if (!imageUrl) {
+      console.warn('Image URL missing or invalid, using placeholder');
+      return 'https://via.placeholder.com/300'; // Fallback to placeholder image
+    }
+    return imageUrl;
   };
 
-  const renderItem = ({ item }: { item: ArtItem }) => (
-    <TouchableOpacity style={styles.card} activeOpacity={0.8}>
-      {item.imageUrl ? (
-        <Image source={{ uri: item.imageUrl }} style={styles.artImage} resizeMode="cover" />
-      ) : (
-        <View style={styles.imagePlaceholder}>
-          <Text style={styles.imagePlaceholderText}>No Image</Text>
-        </View>
-      )}
-      <View style={styles.cardContent}>
-        <Text style={styles.artTitle}>{item.title}</Text>
-        <Text style={styles.artInfo}>Culture: {item.culture}</Text>
-        <Text style={styles.artInfo}>Period: {item.period}</Text>
-      </View>
-    </TouchableOpacity>
+  const renderArtwork = ({ item }: { item: Artwork }) => (
+    <View style={styles.artCard}>
+      <Text style={styles.artTitle}>{item.title || 'Untitled'}</Text>
+      <Image
+        source={{ uri: getImageUrl(item.primaryImage) }}
+        style={styles.artImage}
+        onError={() => console.warn(`Failed to load image for artwork: ${item.title}`)}
+      />
+      <Text style={styles.artArtist}>{item.artistDisplayName || 'Unknown Artist'}</Text>
+    </View>
   );
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
-
+      <Text style={styles.header}>Metropolitan Museum Art Collection</Text>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search for art (e.g., Van Gogh)"
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
       {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#007AFF" />
-          <Text style={styles.loadingText}>Loading art data...</Text>
-        </View>
+        <Text style={styles.loadingText}>Loading artworks...</Text>
       ) : (
         <FlatList
-          data={artItems}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={styles.list}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
+          data={artworks}
+          keyExtractor={(item) => item.objectID.toString()}
+          renderItem={renderArtwork}
+          contentContainerStyle={styles.artList}
         />
       )}
     </View>
@@ -107,67 +108,58 @@ const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#f5f5f5',
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+  searchBar: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    borderColor: '#ccc',
+    borderWidth: 1,
   },
   loadingText: {
-    marginTop: 10,
+    textAlign: 'center',
+    marginTop: 20,
     fontSize: 16,
-    color: '#666',
+    color: '#555',
   },
-  list: {
-    padding: 16,
+  artList: {
+    padding: 10,
   },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 8,
-    marginBottom: 16,
-    overflow: 'hidden',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+  artCard: {
+    backgroundColor: '#fff',
+    marginBottom: 15,
+    padding: 10,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   artImage: {
     width: '100%',
     height: width * 0.6,
-    backgroundColor: '#FFF', // Ensures a clean white base for images with transparency
-  },
-  imagePlaceholder: {
-    width: '100%',
-    height: width * 0.6,
-    backgroundColor: '#DDD',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  imagePlaceholderText: {
-    color: '#888',
-    fontSize: 16,
-  },
-  cardContent: {
-    padding: 16,
+    borderRadius: 5,
+    backgroundColor: '#e0e0e0',
   },
   artTitle: {
-    fontSize: 18,
+    marginTop: 10,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
   },
-  artInfo: {
+  artArtist: {
     fontSize: 14,
-    color: '#666',
-    marginTop: 4,
+    color: '#777',
+    marginTop: 5,
   },
 });
 
-export default HomeScreen;
+export default ArtGalleryApp;

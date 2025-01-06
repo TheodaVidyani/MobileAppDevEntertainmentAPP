@@ -128,7 +128,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
               value={formData.username}
               onChangeText={(text) => handleInputChange('username', text)}
               placeholder="Enter your username"
-              placeholderTextColor="#88A398"
+              placeholderTextColor="#9E7A4E"
             />
             {errors.username && (
               <Text style={styles.errorText}>{errors.username}</Text>
@@ -142,7 +142,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
               value={formData.email}
               onChangeText={(text) => handleInputChange('email', text)}
               placeholder="Enter your email"
-              placeholderTextColor="#88A398"
+              placeholderTextColor="#9E7A4E"
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
@@ -159,7 +159,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
               value={formData.password}
               onChangeText={(text) => handleInputChange('password', text)}
               placeholder="Enter your password"
-              placeholderTextColor="#88A398"
+              placeholderTextColor="#9E7A4E"
               secureTextEntry
             />
             {errors.password && (
@@ -174,7 +174,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
               value={formData.confirmPassword}
               onChangeText={(text) => handleInputChange('confirmPassword', text)}
               placeholder="Confirm your password"
-              placeholderTextColor="#88A398"
+              placeholderTextColor="#9E7A4E"
               secureTextEntry
             />
             {errors.confirmPassword && (
@@ -204,7 +204,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F9F7',
+    backgroundColor: '#f5f5f5',
   },
   scrollContainer: {
     flexGrow: 1,
@@ -212,11 +212,12 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 10,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 250,
+    height: 250,
+    borderRadius: 100,
   },
   formContainer: {
     paddingHorizontal: 24,
@@ -224,7 +225,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#2E7D52',
+    color: '#6A4E23',
     marginBottom: 16,
     textAlign: 'center',
   },
@@ -233,18 +234,18 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: '#2E7D52',
+    color: '#6A4E23',
     marginBottom: 8,
     fontWeight: '500',
   },
   input: {
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#D4E5DE',
+    borderColor: '#C4A66A',
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
-    color: '#2E7D52',
+    color: '#9E7A4E',
   },
   inputError: {
     borderColor: '#FF6B6B',
@@ -255,7 +256,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   button: {
-    backgroundColor: '#2E7D52',
+    backgroundColor: '#6A4E23',
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
@@ -272,13 +273,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   loginText: {
-    color: '#88A398',
+    color: '#6A4E23',
     fontSize: 14,
+    marginTop: 15,
+    marginBottom: 50,
   },
   loginLink: {
-    color: '#2E7D52',
+    color: '#6A4E23',
     fontSize: 14,
     fontWeight: 'bold',
+    marginTop: 15,
+    marginBottom: 50,
   },
 });
 

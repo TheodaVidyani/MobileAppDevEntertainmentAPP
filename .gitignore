@@ -18,7 +18,7 @@ expo-env.d.ts
 *.mobileprovision
 
 # Metro
-.metro-health-check*
+.metro-Entertainment-check*
 
 # debug
 npm-debug.*

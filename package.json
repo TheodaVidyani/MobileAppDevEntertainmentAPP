@@ -1,5 +1,5 @@
 {
-  "name": "health-app-mad",
+  "name": "entertainment-app-mad",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -34,7 +34,7 @@
     "expo-symbols": "~0.2.0",
     "expo-system-ui": "~4.0.6",
     "expo-web-browser": "~14.0.1",
-    "health-app-mad": "file:",
+    "entertainment-app-mad": "file:",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-native": "0.76.5",

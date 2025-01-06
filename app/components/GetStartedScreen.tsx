@@ -42,6 +42,7 @@ const GetStartedScreen: React.FC<GetStartedScreenProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.topSection}>
+      <Text style={styles.title}>Discover Art at Your Fingertips!</Text>
         <Image
           source={require('../assets/ArtPhoto.jpg')}
           style={styles.logo}
@@ -56,7 +57,6 @@ const GetStartedScreen: React.FC<GetStartedScreenProps> = ({ navigation }) => {
             },
           ]}
         >
-          <Text style={styles.title}>Discover Art at Your Fingertips!</Text>
         </Animated.View>
       </View>
 
@@ -84,7 +84,7 @@ const GetStartedScreen: React.FC<GetStartedScreenProps> = ({ navigation }) => {
           onPress={handleGetStarted}
           activeOpacity={0.8}
         >
-          <Text style={styles.buttonText}>Get Started</Text>
+          <Text style={styles.buttonText}>Explore More!</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -123,9 +123,9 @@ const styles = StyleSheet.create({
   logo: {
     width: width * 0.8,
     height: width * 0.5,
-    marginBottom: 24,
-    marginTop: 50,
-    borderRadius: 50,
+    marginBottom: 10,
+    marginTop: 30,
+    borderRadius: 80,
     overflow: 'hidden',
   },
   textContainer: {
@@ -134,9 +134,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#6A4E23', // Brownish color for the title
+    color: '#6A4E23',
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: 4,
+    marginTop: 20,
     lineHeight: 40,
   },
   subtitle: {
@@ -177,12 +178,12 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#6A4E23', // Brownish color for feature titles
+    color: '#6A4E23',
     marginBottom: 4,
   },
   featureDescription: {
     fontSize: 14,
-    color: '#6A4E23', // Brownish color for feature description
+    color: '#6A4E23', 
     lineHeight: 20,
   },
   bottomSection: {

@@ -15,8 +15,6 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
-// import { LoginFormData, FormErrors } from '../types/auth.types';
-// import { MOCK_USER } from '../constants/mockData';
 
 type LoginScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -24,8 +22,6 @@ type LoginScreenProps = {
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [formData, setFormData] = useState({ email: '', password: '' });
-
-  
   const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -87,14 +83,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
             <TextInput
               style={[styles.input, styles.inputError]}
               value={formData.email}
-               onChangeText={(text) => setFormData({ ...formData, email: text })}
+              onChangeText={(text) => setFormData({ ...formData, email: text })}
               placeholder="Enter your email"
-              placeholderTextColor="#88A398"
+              placeholderTextColor="#9E7A4E"
               keyboardType="email-address"
               autoCapitalize="none"
               autoComplete="email"
             />
-           
           </View>
 
           <View style={styles.inputContainer}>
@@ -103,9 +98,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               <TextInput
                 style={[styles.input, styles.passwordInput, styles.inputError]}
                 value={formData.password}
-               onChangeText={(text) => setFormData({ ...formData, password: text })}
+                onChangeText={(text) => setFormData({ ...formData, password: text })}
                 placeholder="Enter your password"
-                placeholderTextColor="#88A398"
+                placeholderTextColor="#9E7A4E"
                 secureTextEntry={!showPassword}
               />
               <TouchableOpacity
@@ -115,7 +110,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
                 <Text>{showPassword ? '👁️' : '👁️‍🗨️'}</Text>
               </TouchableOpacity>
             </View>
-            
           </View>
 
           <TouchableOpacity style={styles.forgotPassword}>
@@ -149,7 +143,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F9F7',
+    backgroundColor: '#f5f5f5',
   },
   scrollContainer: {
     flexGrow: 1,
@@ -157,11 +151,12 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 20,
   },
   logo: {
-    width: 120,
-    height: 120,
+    width: 300,
+    height: 200,
+    borderRadius: 100,
   },
   formContainer: {
     paddingHorizontal: 24,
@@ -169,13 +164,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#2E7D52',
+    color: '#6A4E23',
     marginBottom: 8,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    color: '#88A398',
+    color: '#9E7A4E',
     marginBottom: 32,
     textAlign: 'center',
   },
@@ -184,7 +179,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: '#2E7D52',
+    color: '#6A4E23',
     marginBottom: 8,
     fontWeight: '500',
   },
@@ -195,10 +190,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     fontSize: 16,
-    color: '#2E7D52',
+    color: '#9E7A4E',
   },
   inputError: {
-    borderColor: '#FF6B6B',
+    borderColor: '#FF6B6B', // Red for input errors
   },
   passwordContainer: {
     position: 'relative',
@@ -211,28 +206,23 @@ const styles = StyleSheet.create({
     right: 16,
     top: 16,
   },
-  errorText: {
-    color: '#FF6B6B',
-    fontSize: 14,
-    marginTop: 4,
-  },
   forgotPassword: {
     alignSelf: 'flex-end',
     marginBottom: 24,
   },
   forgotPasswordText: {
-    color: '#2E7D52',
+    color: '#6A4E23',
     fontSize: 14,
   },
   button: {
-    backgroundColor: '#2E7D52',
+    backgroundColor: '#6A4E23',
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
     marginBottom: 16,
   },
   buttonDisabled: {
-    backgroundColor: '#88A398',
+    backgroundColor: '#9E7A4E',
   },
   buttonText: {
     color: '#FFFFFF',
@@ -245,13 +235,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   registerText: {
-    color: '#88A398',
+    color: '#9E7A4E',
     fontSize: 14,
+    marginTop: 15,
+    marginBottom: 50,
   },
   registerLink: {
-    color: '#2E7D52',
+    color: '#6A4E23',
     fontSize: 14,
     fontWeight: 'bold',
+    marginTop: 15,
+    marginBottom: 50,
   },
 });
 

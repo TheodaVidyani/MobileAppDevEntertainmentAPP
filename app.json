@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Health-App-MAD",
-    "slug": "Health-App-MAD",
+    "name": "Entertainment-App-MAD",
+    "slug": "Entertainment-App-MAD",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -20,7 +20,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.HealthAppMAD"
+      "package": "com.anonymous.EntertainmentAppMAD"
     },
     "web": {
       "bundler": "metro",

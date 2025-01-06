@@ -1,6 +1,6 @@
-# Healthcare App - Corona Tracker 💉🌍
+# Art Gallery App - Masterpieces at Your Fingertips 🎨🌐
 
-This app provides up-to-date information about COVID-19 statistics in various countries. Users can view the number of cases, recoveries, and deaths globally and for specific countries. The app also includes a simple user authentication system, allowing users to register and log in to track their progress and view statistics.
+This app brings a stunning collection of artwork from around the world to your device. Users can explore famous masterpieces, view artist details, and search for art by themes, periods, or artists. The app also includes a user authentication system, enabling users to register and log in for a personalized experience.
 
 ## Table of Contents 📚
 - [Project Description](#project-description)
@@ -10,19 +10,17 @@ This app provides up-to-date information about COVID-19 statistics in various co
 - [Technologies Used](#technologies-used)
 - [User Authentication](#user-authentication)
 - [Navigation](#navigation)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Project Description 📝
 
-The **Corona Tracker App** provides users with a user-friendly interface to track the latest COVID-19 statistics across various countries. The app fetches data from a publicly available API to display critical health data such as confirmed cases, recoveries, and deaths for each country.
+The Art Gallery App is a user-friendly platform to explore, learn, and appreciate art. It fetches data from a publicly available API to display detailed information about various artworks, including titles, artists, and images. The app is designed to inspire art lovers and collectors alike by offering easy access to the art world.
 
 ### Features:
-- View real-time COVID-19 statistics for any country 🌐.
+- Search and explore a wide range of artworks by keyword or artist 🎨.
 - User authentication system with registration and login forms 🔑.
-- Display information in a card view with status tags, title, and description 🏷️.
+- Interactive UI with detailed artwork cards featuring titles, artists, and images 🖼.
 - Floating button to track the number of times a user clicks on an item in the list 🖱️.
-- Context API (or another state management library) to manage the click count state 📊.
+- State management using Context API for seamless user experience 🔄.
 
 ## Features 🚀
 
@@ -31,14 +29,14 @@ The **Corona Tracker App** provides users with a user-friendly interface to trac
 - **Login**: Users can log in with their credentials to access the home page.
 - Form validations are implemented for both registration and login forms using hooks.
 
-### Corona Statistics 📊
-- Fetches COVID-19 data from a public API (e.g., `https://api.covid19api.com/`).
-- Displays country-specific details, including confirmed cases, deaths, and recoveries.
-- Information is displayed in a card view format with status tags, titles, and descriptions.
+### Art Collection 🖼
+- Fetches artwork data from the public API, `https://collectionapi.metmuseum.org/`.
+- Displays detailed information for each artwork, including title, artist, and an image.
+- Supports fallback placeholders for artworks without images.
 
 ### Floating Button 🦸
 - A floating button at the bottom of the screen shows the count of user clicks on items in the list.
-- State management is implemented using **Context API** or another simple state management library like **Zustand** or **Redux**.
+- State management for the click count is implemented using Context API or a similar state management solution.
 
 ### Navigation 🧭
 - Simple navigation using `react-navigation` or `expo-router`.
@@ -49,5 +47,54 @@ The **Corona Tracker App** provides users with a user-friendly interface to trac
 Follow these steps to run the app locally:
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/THIRUNIJAYATHILAKE/Rajith-Health-MAD
+
+   git clone https://github.com/TheodaVidyani/MobileAppDevEntertainmentAPP.git
+
+2. Navigate to the project directory
+
+3. Install Dependencies
+
+4. Start the development server
+npx expo start
+
+## Usage 🔄
+
+Open the app and log in using your credentials.
+
+Explore the art collection by searching for keywords or selecting from the curated list.
+
+Click on an artwork to view its details, including the title, artist name, and image.
+
+Track your interactions with the floating button displaying the click count.
+
+Use the navigation bar to explore different sections of the app.
+
+## Technologies Used 💡
+
+Frontend: React Native, Context API, Expo
+
+Backend: Public Art API (, Metropolitan Museum of Art API)
+
+State Management: Context API
+
+Navigation: React Navigation
+
+## User Authentication 🔐
+
+The app includes a simple yet secure authentication system:
+
+Registration: Users can sign up with a username and password.
+
+Login: Authenticated users can log in to access personalized features.
+
+Passwords are securely managed using hashing or similar techniques.
+
+## Navigation 🛏️
+
+The app offers intuitive navigation:
+
+Home Page: Displays a curated list of popular artworks.
+
+Search: Users can search for specific artworks or artists.
+
+Profile: Allows users to view their activity and preferences.

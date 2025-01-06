@@ -6,6 +6,7 @@ import RegisterScreen from './components/RegistrationScreen';
 import GetStartedScreen from './components/GetStartedScreen';
 import HomeScreen from './components/HomeScreen';
 import { CountProvider } from './context/CountContext';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Index: React.FC = () => {

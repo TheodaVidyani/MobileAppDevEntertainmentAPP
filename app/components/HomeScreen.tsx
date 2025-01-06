@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, Dimensions, TextInput } from 'react-native';
 import axios from 'axios';
+import { useCount } from '../context/CountContext'; // Import the context hook
 
 const { width } = Dimensions.get('window');
 
@@ -16,6 +17,8 @@ const ArtGalleryApp = () => {
   const [searchQuery, setSearchQuery] = useState('sunflowers'); // Default query
   const [artworks, setArtworks] = useState<Artwork[]>([]); // Explicitly set the state type to Artwork[]
   const [loading, setLoading] = useState(false);
+
+  const { count, incrementCount } = useCount(); // Get count and increment function from context
 
   useEffect(() => {
     if (searchQuery) {
@@ -34,21 +37,20 @@ const ArtGalleryApp = () => {
       // Fetch artwork details for each object ID
       const artworksData = await Promise.all(
         objectIDs.map(async (id: number) => { // Ensure the ID is treated as a number
-          try{
-          const objectUrl = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
-          const objectResponse = await axios.get(objectUrl);
-          return objectResponse.data;
-        }
-        catch (error) {
-          // Handle the 404 error and skip to the next item
-          if (axios.isAxiosError(error) && error.response?.status === 404) {
-            console.warn(`Artwork with ID ${id} not found (404). Skipping...`);
-            return null; // Skip this artwork
+          try {
+            const objectUrl = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`;
+            const objectResponse = await axios.get(objectUrl);
+            return objectResponse.data;
+          } catch (error) {
+            // Handle the 404 error and skip to the next item
+            if (axios.isAxiosError(error) && error.response?.status === 404) {
+              console.warn(`Artwork with ID ${id} not found (404). Skipping...`);
+              return null; // Skip this artwork
+            }
+            console.error('Error fetching artwork:', error);
+            return null; // Skip this artwork on other errors
           }
-          console.error('Error fetching artwork:', error);
-          return null; // Skip this artwork on other errors
-        }
-      })
+        })
       );
 
       // Filter artworks with a valid primaryImage
@@ -79,8 +81,9 @@ const ArtGalleryApp = () => {
         onError={() => console.warn(`Failed to load image for artwork: ${item.title}`)}
       />
       <Text style={styles.artArtist}>{item.artistDisplayName || 'Artist Unknown'}</Text>
+      <Text style={styles.clickCountText}>Clicked {count} times</Text>
     </View>
-  );  
+  );
 
   return (
     <View style={styles.container}>
@@ -97,10 +100,17 @@ const ArtGalleryApp = () => {
         <FlatList
           data={artworks}
           keyExtractor={(item) => item.objectID.toString()}
-          renderItem={renderArtwork}
+          renderItem={({ item }) => (
+            <View onTouchEnd={incrementCount}>{renderArtwork({ item })}</View>
+          )}
           contentContainerStyle={styles.artList}
         />
       )}
+
+      {/* Floating button at the bottom */}
+      <View style={styles.floatingButton}>
+        <Text style={styles.floatingButtonText}>{count}</Text>
+      </View>
     </View>
   );
 };
@@ -117,7 +127,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     color: '#6A4E23',
     marginLeft: 20,
-    marginRight : 20,
+    marginRight: 20,
     marginTop: 30,
     marginBottom: 30,
   },
@@ -166,6 +176,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#777',
     marginTop: 5,
+  },
+  clickCountText: {
+    marginTop: 10,
+    fontSize: 14,
+    color: '#6A4E23',
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#6A4E23',
+    padding: 16,
+    borderRadius: 50,
+    elevation: 10,
+  },
+  floatingButtonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
   },
 });
 

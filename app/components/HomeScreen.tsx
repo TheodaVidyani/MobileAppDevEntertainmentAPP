@@ -72,15 +72,15 @@ const ArtGalleryApp = () => {
 
   const renderArtwork = ({ item }: { item: Artwork }) => (
     <View style={styles.artCard}>
-      <Text style={styles.artTitle}>{item.title || 'Untitled'}</Text>
+      <Text style={styles.artTitle}>{item.title || 'Untitled Artwork'}</Text>
       <Image
         source={{ uri: getImageUrl(item.primaryImage) }}
         style={styles.artImage}
         onError={() => console.warn(`Failed to load image for artwork: ${item.title}`)}
       />
-      <Text style={styles.artArtist}>{item.artistDisplayName || 'Unknown Artist'}</Text>
+      <Text style={styles.artArtist}>{item.artistDisplayName || 'Artist Unknown'}</Text>
     </View>
-  );
+  );  
 
   return (
     <View style={styles.container}>

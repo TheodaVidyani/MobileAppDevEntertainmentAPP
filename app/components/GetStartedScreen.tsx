@@ -56,29 +56,25 @@ const GetStartedScreen: React.FC<GetStartedScreenProps> = ({ navigation }) => {
             },
           ]}
         >
-          <Text style={styles.title}>Stay Updated with{'\n'}COVID-19 Stats</Text>
-          <Text style={styles.subtitle}>
-            Get real-time updates and statistics about COVID-19 cases worldwide.
-            Stay informed and stay safe.
-          </Text>
+          <Text style={styles.title}>Discover Art at Your Fingertips!</Text>
         </Animated.View>
       </View>
 
       <View style={styles.featuresContainer}>
         <FeatureItem
-          icon="📊"
-          title="Real-time Statistics"
-          description="Access up-to-date COVID-19 statistics from reliable sources"
+          icon="🖼️"
+          title="Exclusive Art Collections"
+          description="Explore unique artwork from renowned and emerging artists"
         />
         <FeatureItem
-          icon="🌍"
-          title="Global Coverage"
-          description="Track cases, recoveries, and vaccinations worldwide"
+          icon="🎨"
+          title="Art Events & Exhibitions"
+          description="Stay updated with upcoming art events, exhibitions, and gallery openings"
         />
         <FeatureItem
-          icon="🔔"
-          title="Important Updates"
-          description="Receive notifications about significant changes in your area"
+          icon="👩‍🎨"
+          title="Meet the Artists"
+          description="Learn about the artists behind the masterpieces"
         />
       </View>
 
@@ -116,7 +112,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F9F7',
+    backgroundColor: '#F5F1E6', // Cream color for background
   },
   topSection: {
     flex: 2,
@@ -138,7 +134,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#2E7D52',
+    color: '#6A4E23', // Brownish color for the title
     textAlign: 'center',
     marginBottom: 16,
     lineHeight: 40,
@@ -181,12 +177,12 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#2E7D52',
+    color: '#6A4E23', // Brownish color for feature titles
     marginBottom: 4,
   },
   featureDescription: {
     fontSize: 14,
-    color: '#88A398',
+    color: '#6A4E23', // Brownish color for feature description
     lineHeight: 20,
   },
   bottomSection: {
@@ -194,7 +190,7 @@ const styles = StyleSheet.create({
     paddingBottom: Platform.OS === 'ios' ? 40 : 24,
   },
   button: {
-    backgroundColor: '#2E7D52',
+    backgroundColor: '#6A4E23', // Brown color for the button
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
@@ -214,7 +210,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
 export default GetStartedScreen;
-
-
